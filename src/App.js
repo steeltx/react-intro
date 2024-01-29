@@ -5,19 +5,32 @@ import { TodoItem } from './Components/TodoItem';
 import { CreateTodoButton } from './Components/CreateTodoButton';
 import './App.css';
 
+
+const defaultTodos = [
+	{text: 'Aprender HTML', completed: true},
+	{text: 'Aprender CSS', completed: true},
+	{text: 'Aprender JS', completed: true},
+	{text: 'Aprender React', completed: false}
+];
+
 function App() {
 	return (
-	<div className="App">
-		<TodoCounter />
+	<>
+		<TodoCounter completed={10} total={25}/>
 		<TodoSearch />
 		<TodoList>
-			<TodoItem />
-			<TodoItem />
-			<TodoItem />
-			<TodoItem />
+			{
+				defaultTodos.map(todo => (
+					<TodoItem 
+						key={todo.text}
+						text={todo.text} 
+						completed={todo.completed}
+					/>
+				))
+			}
 		</TodoList>
 		<CreateTodoButton />
-	</div>
+	</>
 	);
 }
 
