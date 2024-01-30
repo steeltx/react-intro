@@ -3,8 +3,6 @@ import { TodoSearch } from './Components/TodoSearch';
 import { TodoList } from './Components/TodoList';
 import { TodoItem } from './Components/TodoItem';
 import { CreateTodoButton } from './Components/CreateTodoButton';
-import './App.css';
-
 
 const defaultTodos = [
 	{text: 'Aprender HTML', completed: true},
