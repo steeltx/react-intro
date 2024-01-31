@@ -20,13 +20,35 @@ function App() {
 	const completedTodos = todos.filter(todo => !!todo.completed).length;
 	const totalTodos = todos.length;
 
-	console.log(searchValue)
-
 	const searchedTodos = todos.filter(
-		(todo) => {
-			return todo.text.toLowerCase().includes(searchValue.toLowerCase());
-		}
+		(todo) => (todo.text.toLowerCase().includes(searchValue.toLowerCase()))
 	);
+
+	const completeTodo = (text) => {
+		// realizar una copia de los objetos
+		const newTodos = [...todos];
+		// buscar el indice que coincide con el texto
+		const todoIndex = newTodos.findIndex(
+			(todo) => todo.text === text
+		);
+		// cambiar el valor de completed
+		newTodos[todoIndex].completed = true;
+		// escribir el nuevo estado
+		setTodos(newTodos);
+	}
+
+	const deleteTodo = (text) => {
+		// realizar una copia de los objetos
+		const newTodos = [...todos];
+		// buscar el indice que coincide con el texto
+		const todoIndex = newTodos.findIndex(
+			(todo) => todo.text === text
+		);
+		// eliminar el registro
+		newTodos.splice(todoIndex,1);
+		// escribir el nuevo estado
+		setTodos(newTodos);
+	}
 
 	return (
 	<>
@@ -42,6 +64,8 @@ function App() {
 						key={todo.text}
 						text={todo.text} 
 						completed={todo.completed}
+						onComplete={() => completeTodo(todo.text)}
+						onDelete={() => deleteTodo(todo.text)}
 					/>
 				))
 			}
