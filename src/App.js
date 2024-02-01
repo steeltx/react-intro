@@ -12,18 +12,30 @@ import { CreateTodoButton } from './Components/CreateTodoButton';
 // 	{text: 'Aprender React', completed: false}
 // ];
 
-function App() {
-	const localStorageTodos = localStorage.getItem('TODOS_V1');
 
-	let parsedTodos;
-	if(!localStorageTodos) {
-		localStorage.setItem('TODOS_V1',JSON.stringify([]));
-		parsedTodos = [];
+// se crea un custom hook para manejar los datos en estado y LS
+function useLocalStorage(itemName, initialValue) {
+	const localStorageItem = localStorage.getItem(itemName);
+	let parsedItem;
+	if(!localStorageItem) {
+		localStorage.setItem(itemName,JSON.stringify(initialValue));
+		parsedItem = initialValue;
 	}else{
-		parsedTodos = JSON.parse(localStorageTodos);
+		parsedItem = JSON.parse(localStorageItem);
 	}
 
-	const [todos, setTodos] = useState(parsedTodos);
+	const [item, setItem ] = useState(parsedItem);
+	
+	const saveItem = (newItems) => {
+		setItem(newItems);
+		localStorage.setItem(itemName, JSON.stringify(newItems));
+	}
+	return [item, saveItem];
+}
+
+function App() {
+
+	const [todos, saveTodos] = useLocalStorage('TODOS_V1', []);
 	const [searchValue, setSearchValue] = useState('');
 
 	const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -32,11 +44,6 @@ function App() {
 	const searchedTodos = todos.filter(
 		(todo) => (todo.text.toLowerCase().includes(searchValue.toLowerCase()))
 	);
-
-	const saveTodos = (newTodos) => {
-		setTodos(newTodos);
-		localStorage.setItem('TODOS_V1', JSON.stringify(newTodos));
-	}
 
 	const completeTodo = (text) => {
 		// realizar una copia de los objetos
