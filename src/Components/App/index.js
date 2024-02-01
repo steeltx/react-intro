@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { TodoCounter } from './Components/TodoCounter';
-import { TodoSearch } from './Components/TodoSearch';
-import { TodoList } from './Components/TodoList';
-import { TodoItem } from './Components/TodoItem';
-import { CreateTodoButton } from './Components/CreateTodoButton';
+import { useLocalStorage } from '../../Hooks/useLocalStorage';
+import { AppUI } from './AppUI';
 
 // const defaultTodos = [
 // 	{text: 'Aprender HTML', completed: true},
@@ -11,27 +8,6 @@ import { CreateTodoButton } from './Components/CreateTodoButton';
 // 	{text: 'Aprender JS', completed: true},
 // 	{text: 'Aprender React', completed: false}
 // ];
-
-
-// se crea un custom hook para manejar los datos en estado y LS
-function useLocalStorage(itemName, initialValue) {
-	const localStorageItem = localStorage.getItem(itemName);
-	let parsedItem;
-	if(!localStorageItem) {
-		localStorage.setItem(itemName,JSON.stringify(initialValue));
-		parsedItem = initialValue;
-	}else{
-		parsedItem = JSON.parse(localStorageItem);
-	}
-
-	const [item, setItem ] = useState(parsedItem);
-	
-	const saveItem = (newItems) => {
-		setItem(newItems);
-		localStorage.setItem(itemName, JSON.stringify(newItems));
-	}
-	return [item, saveItem];
-}
 
 function App() {
 
@@ -70,29 +46,16 @@ function App() {
 		// escribir el nuevo estado y guardar en LS
 		saveTodos(newTodos);
 	}
-
-	return (
-	<>
-		<TodoCounter completed={completedTodos} total={totalTodos}/>
-		<TodoSearch 
-			searchValue={searchValue}
-			setSearchValue={setSearchValue}
-		/>
-		<TodoList>
-			{
-				searchedTodos.map(todo => (
-					<TodoItem 
-						key={todo.text}
-						text={todo.text} 
-						completed={todo.completed}
-						onComplete={() => completeTodo(todo.text)}
-						onDelete={() => deleteTodo(todo.text)}
-					/>
-				))
-			}
-		</TodoList>
-		<CreateTodoButton />
-	</>
+	return ( 
+		<AppUI 
+		completedTodos= {completedTodos}
+		totalTodos= {totalTodos}
+		searchValue= {searchValue}
+		setSearchValue= {setSearchValue}
+		searchedTodos= {searchedTodos}
+		completeTodo= {completeTodo}
+		deleteTodo= {deleteTodo}
+		/> 
 	);
 }
 
