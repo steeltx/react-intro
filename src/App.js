@@ -5,16 +5,25 @@ import { TodoList } from './Components/TodoList';
 import { TodoItem } from './Components/TodoItem';
 import { CreateTodoButton } from './Components/CreateTodoButton';
 
-const defaultTodos = [
-	{text: 'Aprender HTML', completed: true},
-	{text: 'Aprender CSS', completed: true},
-	{text: 'Aprender JS', completed: true},
-	{text: 'Aprender React', completed: false}
-];
+// const defaultTodos = [
+// 	{text: 'Aprender HTML', completed: true},
+// 	{text: 'Aprender CSS', completed: true},
+// 	{text: 'Aprender JS', completed: true},
+// 	{text: 'Aprender React', completed: false}
+// ];
 
 function App() {
-	
-	const [todos, setTodos] = useState(defaultTodos);
+	const localStorageTodos = localStorage.getItem('TODOS_V1');
+
+	let parsedTodos;
+	if(!localStorageTodos) {
+		localStorage.setItem('TODOS_V1',JSON.stringify([]));
+		parsedTodos = [];
+	}else{
+		parsedTodos = JSON.parse(localStorageTodos);
+	}
+
+	const [todos, setTodos] = useState(parsedTodos);
 	const [searchValue, setSearchValue] = useState('');
 
 	const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -23,6 +32,11 @@ function App() {
 	const searchedTodos = todos.filter(
 		(todo) => (todo.text.toLowerCase().includes(searchValue.toLowerCase()))
 	);
+
+	const saveTodos = (newTodos) => {
+		setTodos(newTodos);
+		localStorage.setItem('TODOS_V1', JSON.stringify(newTodos));
+	}
 
 	const completeTodo = (text) => {
 		// realizar una copia de los objetos
@@ -33,8 +47,8 @@ function App() {
 		);
 		// cambiar el valor de completed
 		newTodos[todoIndex].completed = true;
-		// escribir el nuevo estado
-		setTodos(newTodos);
+		// escribir el nuevo estado y guardar en LS
+		saveTodos(newTodos);
 	}
 
 	const deleteTodo = (text) => {
@@ -46,8 +60,8 @@ function App() {
 		);
 		// eliminar el registro
 		newTodos.splice(todoIndex,1);
-		// escribir el nuevo estado
-		setTodos(newTodos);
+		// escribir el nuevo estado y guardar en LS
+		saveTodos(newTodos);
 	}
 
 	return (
