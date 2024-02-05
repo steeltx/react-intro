@@ -1,6 +1,11 @@
+import { useContext } from 'react';
+import { TodoContext } from '../../TodoContext';
 import './TodoSearch.css';
 
-function TodoSearch( { searchValue, setSearchValue} ) {
+function TodoSearch() {
+
+    // obtener las propiedades usando useContext e indicando el contexto
+    const {searchValue, setSearchValue} = useContext(TodoContext);
 
     return(
         <input 
