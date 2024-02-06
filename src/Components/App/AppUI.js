@@ -8,6 +8,7 @@ import { TodosLoading } from '../TodosLoading';
 import { TodosError } from '../TodosError';
 import { EmptyTodos } from '../EmptyTodos';
 import { TodoContext } from '../../TodoContext';
+import { Modal } from '../Modal';
 
 function AppUI () {
 
@@ -17,7 +18,9 @@ function AppUI () {
         error,
         searchedTodos,
         completeTodo,
-        deleteTodo
+        deleteTodo,
+        openModal,
+        setOpenModal
     } = useContext(TodoContext);
 
     return (
@@ -47,6 +50,13 @@ function AppUI () {
                     }
                 </TodoList>
             <CreateTodoButton />
+            {
+                openModal && (
+                    <Modal>
+                        Agregar
+                    </Modal>
+                )
+            }
         </>
     );
 }
