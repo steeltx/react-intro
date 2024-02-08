@@ -17,6 +17,15 @@ function TodoProvider( {children} ){
 		(todo) => (todo.text.toLowerCase().includes(searchValue.toLowerCase()))
 	);
 
+	const addTodo = (text) => {
+		const newTodos = [...todos];
+		newTodos.push({
+			text,
+			completed: false 
+		});
+		saveTodos(newTodos);
+	}
+
 	const completeTodo = (text) => {
 		// realizar una copia de los objetos
 		const newTodos = [...todos];
@@ -55,7 +64,8 @@ function TodoProvider( {children} ){
                 completeTodo,
                 deleteTodo,
 				openModal,
-				setOpenModal
+				setOpenModal,
+				addTodo
         }}>
             {children}
         </TodoContext.Provider>
