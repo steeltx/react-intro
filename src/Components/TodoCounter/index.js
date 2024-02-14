@@ -1,11 +1,6 @@
-import { useContext } from 'react';
-import { TodoContext } from '../../TodoContext';
-import './TodoCounter.css'
+import './TodoCounter.css';
 
-function TodoCounter() {
-
-    // obtener las propiedades usando useContext e indicando el contexto
-    const {completedTodos,totalTodos} = useContext(TodoContext);
+function TodoCounter({completedTodos,totalTodos}) {
 
     return(
         totalTodos === completedTodos 
