@@ -20,8 +20,7 @@ function AppUI () {
         searchedTodos,
         completeTodo,
         deleteTodo,
-        openModal,
-        setOpenModal
+        openModal
     } = useContext(TodoContext);
 
     return (

@@ -1,6 +1,6 @@
 import './TodosLoading.css';
 
-function TodosLoading( { } ) {
+function TodosLoading() {
 
     return(
         <div className='LoadingTodo-container'>

@@ -1,4 +1,4 @@
-function EmptyTodos( { } ) {
+function EmptyTodos( ) {
 
     return(
         <p>Crea tu primer tarea</p>
