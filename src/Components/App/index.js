@@ -41,14 +41,47 @@ function App() {
                     setSearchValue={setSearchValue}
                 />
             </TodoHeader>
-            <TodoList>
-                {loading && (
-                    <>
-                        <TodosLoading />
-                        <TodosLoading />
-                        <TodosLoading />
-                    </>
-                )}
+            <TodoList 
+                error={error}
+                loading={loading}
+                searchedTodos={searchedTodos}
+                searchText={searchValue}
+                totalTodos={totalTodos}
+                onError={() => <TodosError />}
+                onLoading={() => <TodosLoading />}
+                onEmptyTodos={() => <EmptyTodos />}
+                onEmptySearchResults={(searchText) => <p>No hay resultados para: { searchText }</p>}
+                // render prop
+                // render={todo => (
+                //     <TodoItem 
+                //         key={todo.text}
+                //         text={todo.text} 
+                //         completed={todo.completed}
+                //         onComplete={() => completeTodo(todo.text)}
+                //         onDelete={() => deleteTodo(todo.text)}
+                //     />
+                // )}
+            >
+                {/* Render function */}
+                {
+                    todo => (
+                        <TodoItem 
+                            key={todo.text}
+                            text={todo.text} 
+                            completed={todo.completed}
+                            onComplete={() => completeTodo(todo.text)}
+                            onDelete={() => deleteTodo(todo.text)}
+                        />
+                    )
+                }
+            </TodoList>
+
+
+            {/* 
+                Forma anterior
+                
+                <TodoList>
+                {loading && (<TodosLoading />)}
                 {error && <TodosError />}
                 {(!loading && searchedTodos.length < 1) && <EmptyTodos />}
                 {
@@ -62,7 +95,7 @@ function App() {
                         />
                     ))
                 }
-            </TodoList>
+            </TodoList> */}
             <CreateTodoButton 
 				openModal={openModal}
 				setOpenModal={setOpenModal}
