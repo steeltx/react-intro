@@ -31,7 +31,11 @@ function App() {
 
 	return (
         <>
-            <TodoHeader>
+            {/* 
+                al colocarla en el padre y usar clone y Children, se envia la 
+                propiedad loading a los elementos dentro del TodoHeader 
+            */}
+            <TodoHeader loading={loading}>
                 <TodoCounter 
                     totalTodos={totalTodos}
                     completedTodos={completedTodos}
@@ -79,7 +83,7 @@ function App() {
 
             {/* 
                 Forma anterior
-                
+
                 <TodoList>
                 {loading && (<TodosLoading />)}
                 {error && <TodosError />}
