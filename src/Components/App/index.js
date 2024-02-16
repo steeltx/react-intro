@@ -10,6 +10,7 @@ import { EmptyTodos } from '../EmptyTodos';
 import { Modal } from '../Modal';
 import { TodoForm } from '../TodoForm';
 import { TodoHeader } from '../TodoHeader';
+import { ChangeAlertWithStorageListener } from '../ChangeAlert';
 
 function App() {
 
@@ -26,7 +27,8 @@ function App() {
         totalTodos,
         searchValue, 
         setSearchValue,
-		addTodo
+		addTodo,
+        sincronizeTodos
     } = useTodos();
 
 	return (
@@ -114,6 +116,9 @@ function App() {
                     </Modal>
                 )
             }
+            <ChangeAlertWithStorageListener 
+                sincronize={sincronizeTodos}
+            />
         </>
     );
 }

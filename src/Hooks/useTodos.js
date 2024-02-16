@@ -3,7 +3,9 @@ import { useState } from "react";
 
 function useTodos(){
 
-    const { item: todos, saveItem: saveTodos, loading, error } = useLocalStorage('TODOS_V1', []);
+    const { 
+			item: todos, saveItem: saveTodos, loading, error, sincronizeItem : sincronizeTodos
+		} = useLocalStorage('TODOS_V1', []);
 	const [searchValue, setSearchValue] = useState('');
 
 	const [openModal, setOpenModal] = useState(false);
@@ -52,18 +54,19 @@ function useTodos(){
 
     return (
         {
-                loading,
-                error,
-                completedTodos,
-                totalTodos,
-                searchValue,
-                setSearchValue,
-                searchedTodos,
-                completeTodo,
-                deleteTodo,
-				openModal,
-				setOpenModal,
-				addTodo
+			loading,
+			error,
+			completedTodos,
+			totalTodos,
+			searchValue,
+			setSearchValue,
+			searchedTodos,
+			completeTodo,
+			deleteTodo,
+			openModal,
+			setOpenModal,
+			addTodo,
+			sincronizeTodos
         }
     )
 

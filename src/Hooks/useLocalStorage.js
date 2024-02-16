@@ -6,6 +6,8 @@ function useLocalStorage(itemName, initialValue) {
 	const [item, setItem ] = useState(initialValue);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
+	// estado para indicar si la información se encuentra sincronizada en el LS
+	const [sincronizedItem, setSincronizedItem] = useState(true);
 
 	useEffect( () => {
 		setTimeout( () => {
@@ -18,21 +20,28 @@ function useLocalStorage(itemName, initialValue) {
 					parsedItem = initialValue;
 				}else{
 					parsedItem = JSON.parse(localStorageItem);
-					setItem(parsedItem);
 				}
+				setItem(parsedItem);
 				setLoading(false);
+				setSincronizedItem(true);
 			}catch(error){
 				setError(true);
 				setLoading(false);
 			}
 		},1000);
-	}, [initialValue, itemName]);
+	}, [initialValue, itemName, sincronizedItem]);
 
 	const saveItem = (newItems) => {
 		setItem(newItems);
 		localStorage.setItem(itemName, JSON.stringify(newItems));
 	}
-	return {item, saveItem, loading, error};
+
+	const sincronizeItem = () => {
+		setLoading(true);
+		setSincronizedItem(false);
+	}
+
+	return {item, saveItem, loading, error, sincronizeItem};
 }
 
 export { useLocalStorage };
